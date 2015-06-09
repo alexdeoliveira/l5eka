@@ -13,6 +13,7 @@ require('laravel-elixir-livereload');
  |
  */
 
-elixir(function(mix) {
+elixir(function(mix) 
+{
     mix.livereload();
 });

@@ -102,7 +102,7 @@ class CategoryController extends Controller {
 			return  redirect()->back()->withInput()->withErrors(['Falha ao remover categoria']);
 		}
 
-		return redirect()->back()->with('success', 'Categoria salva com sucesso!');
+		return redirect()->back()->with('success', 'Categoria foi removida!');
 	}
 
 }
