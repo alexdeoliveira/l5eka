@@ -18,9 +18,16 @@ class CategoryController extends Controller {
 	 */
 	public function index()
 	{
-		$categories = \App\Category::paginate(6);
 
-		return view('category.index')->with('categories', $categories);
+		$search = \Request::get('search');
+
+		if (!is_null($search) and !empty($search)) {
+			$categories = \App\Category::where('name', 'like', '%'.$search.'%')->paginate(6);
+		} else {
+			$categories = \App\Category::paginate(6);
+		}
+
+		return view('category.index')->with(compact('categories', 'search'));
 	}
 
 	/**

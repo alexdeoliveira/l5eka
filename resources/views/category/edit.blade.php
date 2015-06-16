@@ -48,15 +48,8 @@
 	<div class="col-md-6">
 		<div class="well">
 			@include('partials.alerts')
-			{!! Form::model($category, ['route' => 'category.update']) !!}
-				<div class="form-group">
-					{!! Form::label('name', 'Nome da categoria', ['class' => 'control-label']) !!}
-					{!! Form::text('name', '', ['class' => 'form-control']) !!}
-				</div>
-
-				<div class="form-group">
-					<button class="btn btn-primary"> Salvar </button>
-				</div>
+			{!! Form::model($category, ['route' => ['category.update', $category->id]]) !!}
+				@include('category.partials.form');
 			{!! Form::close() !!}
 		</div>
 	</div>

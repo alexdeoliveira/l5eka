@@ -293,6 +293,8 @@
 	</div>
 	<!-- /#wrapper -->
 
+	@section('scripts')
+
 	<!-- jQuery -->
 	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -304,6 +306,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="/js/sb-admin-2.js"></script>
+
+	@show
 
 	@if ( Config::get('app.debug') )
 		<script type="text/javascript">

@@ -4,62 +4,79 @@
 <h1 class="page-header"><i class="fa fa-fw fa-list"></i> Categorias</h1>
 
 <div class="row">
-	<div class="col-md-6">
+    <div class="col-md-6">
 
-		{{-- Lista --}}
-		<table class="table table-bordered table-striped table-hover">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nome</th>
-					<th>Criada em</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
+        {{-- Busca --}}
+        @include('partials.search', ['search' => $search])
 
-			<tbody>
-				@foreach($categories as $cat)
-					<tr>
-						<td>{{ $cat['id'] }}</td>
-						<td>{{ $cat['name'] }}</td>
-						<td>{{ $cat['created_at'] }}</td>
-						<td>
-							<a href="{{ route('category.edit', $cat['id']) }}" class="btn btn-primary btn-xs">Editar</a>
-							<a href="{{ route('category.destroy', $cat['id']) }}" class="btn btn-danger btn-xs">Excluir</a>
-						</td>
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
+        {{-- Lista --}}
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Criada em</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
 
-		{{-- end lista --}}
+            <tbody>
+                @if(count($categories) > 0)
+                    @foreach($categories as $cat)
+                        <tr>
+                            <td>{{ $cat['id'] }}</td>
+                            <td>{{ $cat['name'] }}</td>
+                            <td>{{ $cat['created_at'] }}</td>
+                            <td>
+                                <a href="{{ route('category.edit', $cat['id']) }}" class="btn btn-primary btn-xs">Editar</a>
+                                <a href="{{ route('category.destroy', $cat['id']) }}" class="btn btn-danger btn-xs btn-destroy">Excluir</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="text-center" colspan="4">Nenhum registro encontrado</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
 
-		{{-- Paginacao --}}
-		<p>Página {!! $categories->currentPage() !!} de {!! $categories->lastPage() !!}</p>
+        {{-- end lista --}}
 
-		<div class="row">
-			<div class="col-md-12 text-center">
-				{!! $categories->render() !!}
-			</div>
-		</div>
+        {{-- Paginacao --}}
+        <p>Página {!! $categories->currentPage() !!} de {!! $categories->lastPage() !!}</p>
 
-		{{-- Paginacao End --}}
-	</div>
-	<div class="col-md-6">
-		<div class="well">
-			@include('partials.alerts')
-			{!! Form::open(['route' => 'category.store']) !!}
-				<div class="form-group">
-					{!! Form::label('name', 'Nome da categoria', ['class' => 'control-label']) !!}
-					{!! Form::text('name', '', ['class' => 'form-control']) !!}
-				</div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {!! $categories->render() !!}
+            </div>
+        </div>
 
-				<div class="form-group">
-					<button class="btn btn-primary"> Salvar </button>
-				</div>
-			{!! Form::close() !!}
-		</div>
-	</div>
+        {{-- Paginacao End --}}
+    </div>
+    <div class="col-md-6">
+        <div class="well">
+            @include('partials.alerts')
+            {!! Form::open(['route' => 'category.store']) !!}
+                @include('category.partials.form')
+            {!! Form::close() !!}
+        </div>
+    </div>
 </div>
+
+@section('scripts')
+@parent
+    <script>
+        $(document).ready(function(){
+            $('.table').on('click', '.btn-destroy', function(event){
+                var confirm = window.confirm('Tem certeza que deseja excluir a categoria?');
+
+                if (!confirm) {
+                    event.preventDefault();
+                };
+            });
+        });
+    </script>
+@stop
 
 @stop
