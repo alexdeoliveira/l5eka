@@ -4,112 +4,116 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\CategoryRequest;
+use App\Course\Repositories\ICategoryRepository as Repository;
 
 use Illuminate\Http\Request;
 
 use App\Category;
 
-class CategoryController extends Controller {
+class CategoryController extends Controller
+{
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+    protected $repository;
 
-		$search = \Request::get('search');
+    public function __construct(Repository $repository)
+    {
+        $this->repository = $repository;
+    }
 
-		if (!is_null($search) and !empty($search)) {
-			$categories = \App\Category::where('name', 'like', '%'.$search.'%')->paginate(6);
-		} else {
-			$categories = \App\Category::paginate(6);
-		}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
 
-		return view('category.index')->with(compact('categories', 'search'));
-	}
+        $search = \Request::get('search');
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store(CategoryRequest $request)
-	{
-		$category = new \App\Category();
-		$category->name = $request->get('name');
-		$result = $category->save();
+        $categories = $this->repository->categories($search);
 
-		if (! $result) {
-			return  redirect()->back()->withInput()->withErrors(['Flha ao salvar categoria']);
-		}
+        return view('category.index')->with(compact('categories', 'search'));
+    }
 
-		return redirect()->back()->with('success', 'Categoria salva com sucesso!');
-	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(CategoryRequest $request)
+    {
+        $result = $this->repository->store($request->all());
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+        if (! $result) {
+            return  redirect()->back()->withInput()->withErrors(['Flha ao salvar categoria']);
+        }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$category = \App\Category::find($id);
+        return redirect()->back()->with('success', 'Categoria salva com sucesso!');
+    }
 
-		$categories = \App\Category::paginate(6);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-		return view('category.edit')
-			->with(compact('category', 'categories'));
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update(CategoryRequest $request, $id)
-	{
-		$category = \App\Category::find($id);
-		$category->name = $request->get('name');
-		$result = $category->save();
+        $search = \Request::get('search');
 
-		if (! $result) {
-			return  redirect()->back()->withInput()->withErrors(['Falha ao salvar categoria']);
-		}
+        $categories = $this->repository->categories($search);
 
-		return redirect()->route('category.index')->with('success', 'Categoria salva com sucesso!');
-	}
+        $category = $this->repository->show($id);
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		$category = \App\Category::find($id);
-		$result = $category->delete();
 
-		if (! $result) {
-			return  redirect()->back()->withInput()->withErrors(['Falha ao remover categoria']);
-		}
+        return view('category.edit')
+            ->with(compact('category', 'categories', 'search'));
+    }
 
-		return redirect()->back()->with('success', 'Categoria foi removida!');
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(CategoryRequest $request, $id)
+    {
+        
+        $result = $this->repository->update($request->all(), $id);
 
+        if (! $result) {
+            return  redirect()->back()->withInput()->withErrors(['Falha ao salvar categoria']);
+        }
+
+        return redirect()->route('category.index')->with('success', 'Categoria salva com sucesso!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $result = $this->repository->destroy($id);
+
+        if (! $result) {
+            return  redirect()->back()->withInput()->withErrors(['Falha ao remover categoria']);
+        }
+
+        return redirect()->back()->with('success', 'Categoria foi removida!');
+    }
 }
