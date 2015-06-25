@@ -66,17 +66,7 @@
 
 @section('scripts')
 @parent
-    <script>
-        $(document).ready(function(){
-            $('.table').on('click', '.btn-destroy', function(event){
-                var confirm = window.confirm('Tem certeza que deseja excluir a categoria?');
-
-                if (!confirm) {
-                    event.preventDefault();
-                };
-            });
-        });
-    </script>
+    <script src="{{ asset('js/categories.js') }}"></script>
 @stop
 
 @stop

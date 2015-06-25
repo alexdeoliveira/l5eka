@@ -1,8 +1,12 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8",
+    "gulp": "~3.9.0",
     "laravel-elixir": "*",
-    "laravel-elixir-livereload": "0.0.3"
+    "laravel-elixir-livereload": "0.0.3",
+    "gulp-install": "~0.4.0"
+  },
+  "dependencies": {
+    "gulp-install": "~0.4.0"
   }
 }
