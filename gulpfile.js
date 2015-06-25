@@ -15,5 +15,10 @@ require('laravel-elixir-livereload');
 
 elixir(function(mix) 
 {
+
+    mix.scripts([
+        
+    ], 'public/js/vendor.js');
+
     mix.livereload();
 });
