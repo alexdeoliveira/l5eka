@@ -10,8 +10,13 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', ['as' => 'dashboard.index', 'uses' => 'DashboardController@index']);
+    
+    Route::group(['prefix' => 'conta'], function () {
+        Route::get('',                  ['as' => 'account.index', 'uses' => 'AccountController@index']);
+        Route::get('senha',             ['as' => 'account.password', 'uses' => 'AccountController@password']);
+    });
 
     // Admin categorias
     Route::group(['prefix' => 'categorias'], function () {
