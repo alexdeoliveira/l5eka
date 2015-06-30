@@ -289,7 +289,7 @@
     @section('scripts')
 
     <script src="{!! asset('js/vendor.js') !!}"></script>
-    <script src="{!! asset('js/app.js') !!}"></script>
+    <script src="{!! elixir('js/app.js') !!}"></script>
 
     @show
 

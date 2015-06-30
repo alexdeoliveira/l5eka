@@ -66,7 +66,7 @@
 
 @section('scripts')
 @parent
-    <script src="{{ asset('js/categories.js') }}"></script>
+    <script src="{{ elixir('js/categories.js') }}"></script>
 @stop
 
 @stop
