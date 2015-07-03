@@ -27,6 +27,10 @@ class ProjectRepository implements IProjectRepository
         return $result;
     }
 
+    public function create()
+    {
+    }
+
     public function show($id)
     {
         $project = Project::find($id);

@@ -8,4 +8,5 @@ interface IProjectRepository
     public function show($id);
     public function update($input, $id);
     public function destroy($id);
+    public function create();
 }

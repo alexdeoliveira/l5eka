@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', ['selectItem' => 'dashboard'])
 
 @section('page_title')
 Dashboard - 

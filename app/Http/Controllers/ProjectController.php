@@ -4,7 +4,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\ProjectRequest;
+
 use App\Course\Repositories\IProjectRepository as Repository;
+use App\Course\Repositories\IUserRepository as UserRepository;
+use App\Course\Repositories\ICategoryRepository as CatRepository;
 
 use Illuminate\Http\Request;
 
@@ -14,10 +17,14 @@ class ProjectController extends Controller
 {
 
     protected $repository;
+    protected $userRepository;
+    protected $catRepository;
 
-    public function __construct(Repository $repository)
+    public function __construct(Repository $repository, UserRepository $userRepository, CatRepository $catRepository)
     {
         $this->repository = $repository;
+        $this->userRepository = $userRepository;
+        $this->catRepository = $catRepository;
     }
 
     /**
@@ -36,6 +43,7 @@ class ProjectController extends Controller
         return view('project.index')->with(compact('projects', 'search'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -50,6 +58,16 @@ class ProjectController extends Controller
         }
 
         return redirect()->back()->with('success', 'Projeto salva com sucesso!');
+    }
+
+    public function create()
+    {
+        $project = null;
+
+        $usersForSelect = $this->userRepository->usersForSelect();
+        $categoriesForSelect = $this->catRepository->categoriesForSelect();
+        
+        return view('project.form')->with(compact('project', 'usersForSelect', 'categoriesForSelect'));
     }
 
     /**

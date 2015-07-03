@@ -40,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Course\Repositories\IProjectRepository',
             'App\Course\Repositories\ProjectRepository'
         );
-    }
 
+        $this->app->bind(
+            'App\Course\Repositories\IUserRepository',
+            'App\Course\Repositories\UserRepository'
+        );
+    }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', ['selectItem' => 'categories'])
 
 @section('page_title')
 Gerenciamento de categorias - 

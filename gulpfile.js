@@ -20,6 +20,8 @@ elixir(function(mix)
         '/../bower_components/jquery/dist/jquery.js',
         '/../bower_components/bootstrap/dist/js/bootstrap.js',
         '/../bower_components/metisMenu/dist/metisMenu.js',
+        '/../bower_components/select2/dist/js/select2.js',
+        '/../bower_components/select2/dist/js/i18n/pt-BR.js',
         'sb-admin-2.js',
     ], 'public/js/vendor.js');
 
@@ -33,16 +35,17 @@ elixir(function(mix)
     mix.scripts('projects.js', 'public/js/projects.js');
 
     mix.styles([
-        '/../bower_components/bootstrap/dist/css/bootstrap.min.css',
-        '/../bower_components/metisMenu/dist/metisMenu.min.css',
-        '/../bower_components/font-awesome/css/font-awesome.min.css',
+        '/../bower_components/bootstrap/dist/css/bootstrap.css',
+        '/../bower_components/metisMenu/dist/metisMenu.css',
+        '/../bower_components/font-awesome/css/font-awesome.css',
+        '/../bower_components/select2/dist/css/select2.css',
         'sb-admin-2.css',
     ], 'public/css/vendor.css');
 
     mix.version([
         'js/app.js',
         'js/categories.js',
-        'js/projects.js',
+        'js/projects.js'
     ]);
 
     mix.livereload();

@@ -3,7 +3,7 @@ $(document).ready(function(){
         var confirm = window.confirm('Tem certeza que deseja excluir a categoria?');
 
         if (!confirm) {
-            event.preventDefault();
+            event.defaultPrevented();
         };
     });
 });

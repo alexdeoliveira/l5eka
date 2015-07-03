@@ -50,4 +50,17 @@ class CategoryRepository implements ICategoryRepository
 
         return $result;
     }
+
+    public function categoriesForSelect()
+    {
+        $categories = Category::all();
+
+        $result[] = null;
+
+        foreach ($categories as $key => $value) {
+            $result[$value->id] = $value->name;
+        }
+
+        return $result;
+    }
 }
